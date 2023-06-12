@@ -118,7 +118,7 @@ This section describes the expected user flow when using the radio. In the follo
 2. If authenticated successfully, the client is able to browse through available playlists.
 3. The client selects one of the available playlists to start listening session.
 	- In the background, the server creates a validates the request and creates the playlist session for the current client.
-	- The server then returns the seed track (the track that the playlist is pre-determined to start from) or a random track if no seed tracks are configured.
+	- The server then returns the seed track (a predetermined track from which the playlist starts) or a random track if no seed tracks are configured.
 4. The client listens to the track.
 	- The client is able to pause/resume the current track or skip to the next one.
 	- At no point in time does the client know which track is going to be next. 
