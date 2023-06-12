@@ -108,3 +108,22 @@ Styngr APIs are using a custom algorithm that enables the track selection to com
 Every playlist has information about the total playlist duration, labels, and number of tracks per label in the playlist. For every user, the Styngr API creates a unique playlist session, which is used to keep track of songs that are played. The playlist session is also used to track the skips. The users are limited to 6 skips per playlist session.
 
 The track selection algorithm relies on record label playback target percentages. This is an optional value in Styngr's system that defines how many tracks from the total playback duration should belong to a particular label. To achieve this, Styngr tracks playback statistics across all playlists and all playlist sessions. Whenever a track is played, the counter for the label owner is incremented by one, indicating the number of tracks played for a particular label.
+
+# User Flow
+
+This section describes the expected user flow when using the radio. In the following text, the user or the application calling the Styngr APIs will be referred to as the `client`, whereas the service provider i.e. the Styngr APIs will be referred to as the `server`.
+
+1. The client toggles the boombox UI by clicking on a UI button in game.
+	- In the background, the server performs the authentication and returns the response to the client.
+2. If authenticated successfully, the client is able to browse through available playlists.
+3. The client selects one of the available playlists to start listening session.
+	- In the background, the server creates a validates the request and creates the playlist session for the current client.
+	- The server then returns the seed track (the track that the playlist is pre-determined to start from) or a random track if no seed tracks are configured.
+4. The client listens to the track.
+	- The client is able to pause/resume the current track or skip to the next one.
+	- At no point in time does the client know which track is going to be next. 
+	- The randomization algorithm that's running on the server takes care of the track selection.
+5. The client skips to the next track.
+	- The client sends playback statistics to the server every time the next track is requested.
+6. The client exits the listening session by closing the boombox or by listening the entire playlist to the end.
+	- A new listening sessions is started by simply selecting one of the available playlists.
