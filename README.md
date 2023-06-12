@@ -81,22 +81,22 @@ The geo-availability of audio assets is dictated by the label owners, who also r
 
 ## Geo-blocking
 
-Depending on the client's geolocation, access to certain content provided by Styngr may be restricted. To achieve this, Styngr stores clients' geo-location in the JWT when they are successfully authenticated and uses this information every time a request comes in.
+Depending on the client's geolocation, access to certain content provided by Styngr may be restricted. To achieve this, Styngr stores clients' geolocation in the JWT when they are successfully authenticated and uses this information every time a request comes in.
 
 Based on the client's technical implementation and architecture, Styngr offers two following solutions for geo-blocking:
 
-1. Styngr APIs approximate the client's geo-location by looking up the source IP address of every HTTP request. The user's location is determined by searching for the public IP address in Styngr's database which is periodically synchronized with data from MaxMind.
+1. Styngr APIs approximate the client's geolocation by looking up the source IP address of every HTTP request. The user's location is determined by searching for the public IP address in Styngr's database which is periodically synchronized with data from MaxMind.
 
-2. In case when the client application or the SDK integrates with Styngr APIs via a proxy server, the client's geo-location can no longer reliably be determined by looking up the source IP address in the HTTP request. Therefore, the client is advised to use the `V2` version of the token endpoint (`POST /api/v2/sdk/tokens`). This endpoint expects the `countryCode` in ISO 3166, alpha-2 format to be passed in the request body.
+2. In case when the client application or the SDK integrates with Styngr APIs via a proxy server, the client's geolocation can no longer reliably be determined by looking up the source IP address in the HTTP request. Therefore, the client is advised to use the `V2` version of the token endpoint (`POST /api/v2/sdk/tokens`). This endpoint expects the `countryCode` in ISO 3166, alpha-2 format to be passed in the request body.
 
 ### How It Works
 
-1.	Client authenticates with the Styngr backend by calling one of the available endpoint versions. 
+1.	Client authenticates with the Styngr backend by calling one of the available token endpoint versions. 
 2.	Styngr API extracts the client's public IP address from the HTTP request when `V1` token endpoint is called or uses the `countryCode` value from the HTTP request body when the `V2` token endpoint is called.
 3.	If the client authenticated via `V1` token endpoint, Styngr API uses the previously extracted public IP address to approximate the client’s geolocation by looking up the MaxMind database from which the country information is retrieved.
 4.	Styngr API cross-references the country information with internal database that holds tracks metadata to determine whether there are any applicable geographical restrictions for the requested audio asset.
-5.	If the audio asset is eligible for use from the client’s country, Styngr API returns the URL which can be used to access the requested audio asset.
-6.	In case the audio asset is not eligible for use from the client’s country, Styngr API throws an exception, and the Client Module is responsible for handling the response. 
+5.	If the audio asset is eligible for use from the client’s country, Styngr API returns the URL or other identifier which can be used to access the requested audio asset.
+6.	In case the audio asset is not eligible for use from the client’s country, Styngr API throws an exception, and the client application is responsible for handling the response. 
 
 
 ## Track Randomization
