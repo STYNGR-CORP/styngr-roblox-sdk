@@ -135,6 +135,11 @@ This section describes the expected user flow when using the radio. In the follo
 
 ## Development
 
+### Server instance
+
+To be able to run the server with the radio it has to be whitelisted and you will have to use that instance. 
+Someone who already has access to it MUST invite you to it. During development you MUST use this instance.
+
 ### Install rust
 
 Install Rust for your system. Intruction can be found at [https://www.rust-lang.org/tools/install](https://www.rust-lang.org/tools/install)
