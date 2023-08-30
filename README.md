@@ -132,3 +132,26 @@ This section describes the expected user flow when using the radio. In the follo
 	- The client sends playback statistics to the server every time the next track is requested.
 6. The client exits the listening session by closing the boombox or by listening the entire playlist to the end.
 	- A new listening sessions is started by simply selecting one of the available playlists.
+
+## Development
+
+### Install rust
+
+Install Rust for your system. Intruction can be found at [https://www.rust-lang.org/tools/install](https://www.rust-lang.org/tools/install)
+
+### Install tools
+
+Rojo is used to sync the files on the disk and Roblox Studio. It is running as a server.
+
+Wally is a package manager that will install the required libraries for the Roblox Studio to be able to run the instance.
+
+'''
+cargo install rojo
+cargo install wally
+wally install
+'''
+
+### Configuration
+
+In `src/ServerScriptService` there is a file `Bootstrapper.server.lua.example` copy it to the same folder 
+and remove the `.example` from it's end. Set the empty values in it to the propper values.
