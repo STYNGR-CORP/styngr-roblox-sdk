@@ -6,14 +6,15 @@ function DateTimeOffset.GetOffset(seconds)
 	if seconds == 0 then
 		return "UTC00:00"
 	end
+
 	local offsetString = "UTC"
 
 	local absoluteValue = math.abs(seconds)
 	local sign = absoluteValue / seconds
 	local hours = math.floor(absoluteValue / SECONDS_IN_HOUR)
 	local minutes = math.floor(((absoluteValue - (hours * SECONDS_IN_HOUR)) / SECONDS_IN_MINUTE))
-	hours *= sign
-		
+	hours = hours * sign
+
 	if hours > 0 then
 		offsetString = offsetString .. "+"
 	end

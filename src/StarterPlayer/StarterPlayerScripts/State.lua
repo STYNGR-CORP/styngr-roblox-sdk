@@ -16,7 +16,7 @@ local State = Value({
 function State:update(callback)
 	local newValue = callback(State:get())
 
-	assert(newValue and typeof(newValue) == "table")
+	assert(newValue and typeof(newValue) == "table", "Invalid status")
 
 	return State:set(newValue)
 end
