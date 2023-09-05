@@ -42,6 +42,10 @@
 				"$className": "Folder",
 				"$path": "src/ServerScriptService"
 			},
+			"TestEz": {
+				"$className": "Folder",
+				"$path": "dev/TestEz"
+			},
 			"Local": {
 				"$className": "Folder",
 				"$path": "src/local/Server"
