@@ -150,13 +150,39 @@ Rojo is used to sync the files on the disk and Roblox Studio. It is running as a
 
 Wally is a package manager that will install the required libraries for the Roblox Studio to be able to run the instance.
 
-'''
+```bash
 cargo install rojo
+rojo plugin install
 cargo install wally
 wally install
-'''
+```
 
 ### Configuration
 
 In `src/ServerScriptService` there is a file `Bootstrapper.server.lua.example` copy it to the same folder 
 and remove the `.example` from it's end. Set the empty values in it to the propper values.
+
+### Developing
+
+To be able to use the files from the git repository the simplest way is to copy/paste it over to Roblox Studio and keep it in sync manually.
+Automatic sync is supported by Rojo. The `rojo plugin install` has installed the plugin into Roblox Studio. 
+To start the syncing process use the command in the folder where the project is located: 
+
+```bash
+rojo serve .\development.project.json
+```
+
+This starts the sync server. To connect to the server in Roblox Studio select `Plugins` and pick `Rojo`. This will open a side menu where you can 
+enter the address of the server. The default value of `locahost:34872` should work. Click on `Connect`. The files in the Roblox Studio should be 
+synced to the files in git. 
+
+**The sync is only one way.** The files are synced into Roblox Studio. Any changes made in Roblox Studio will be 
+overwritten then rojo syncs, with the files.
+
+### Linter
+
+To run the linter, selene, run the following command:
+
+```bash
+selene src
+```
