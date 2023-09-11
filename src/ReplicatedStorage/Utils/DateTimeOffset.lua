@@ -4,7 +4,7 @@ local SECONDS_IN_HOUR = 60 * SECONDS_IN_MINUTE
 
 function DateTimeOffset.GetOffset(seconds)
 	if seconds == 0 then
-		return "UTC00:00"
+		return "UTC+00:00"
 	end
 
 	local offsetString = "UTC"
