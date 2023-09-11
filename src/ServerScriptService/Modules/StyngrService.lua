@@ -25,7 +25,7 @@ function StyngrService.BuildClientFriendlyTrack(userId, track)
 			and typeof(track["title"]) == "string"
 			and typeof(track["artistNames"]) == "table"
 			and typeof(track["isLiked"]) == "boolean"
-			and typeof(track["playlistId"] == "string"),
+			and typeof(track["playlistId"]) == "string",
 		"Please ensure the passed in track is valid and contains all necessary values."
 	)
 
@@ -94,33 +94,33 @@ function StyngrService:_endTrack(userId: number)
 end
 
 function StyngrService:_clientTrackEvent(userId: number, event)
-	assert(event and (event == "PLAYED" or event == "ENDED" or event == "RESUMED" or event == "PAUSED"))
+	assert(event and (event == "PLAYED" or event == "ENDED" or event == "RESUMED" or event == "PAUSED"), "Invalid event")
 
 	local statistics = self._tracking[userId]
 
-	assert(statistics)
+	assert(statistics, "No statistics")
 
 	if event == "PLAYED" then
-		assert(not statistics.ended)
+		assert(not statistics.ended, "Played and not ended")
 
 		statistics.started = os.time()
 	elseif event == "ENDED" then
-		assert(statistics.started)
+		assert(statistics.started, "Not started")
 
 		local ended = os.time()
 
-		assert(statistics.started <= ended)
+		assert(statistics.started <= ended, "Ended before it started")
 
 		statistics.ended = ended
 	elseif event == "RESUMED" then
 		local paused = os.time() - statistics.paused
 
-		assert(paused >= 0)
+		assert(paused >= 0, "Just paused")
 
 		statistics.paused = nil
 		statistics.totalPaused += paused
 	elseif event == "PAUSED" then
-		assert(not statistics.paused)
+		assert(not statistics.paused, "Already paused")
 
 		statistics.paused = os.time()
 	end
@@ -160,7 +160,7 @@ function StyngrService:SetConfiguration(inputConfiguration: Types.StyngrServiceC
 			and inputConfiguration.appId
 			and typeof(inputConfiguration.appId) == "string"
 			and inputConfiguration.boombox
-			and typeof(inputConfiguration.boombox == "table")
+			and typeof(inputConfiguration.boombox) == "table"
 			and inputConfiguration.boombox.textureId
 			and typeof(inputConfiguration.boombox.textureId) == "string",
 		"Please specify a configuration and ensure all values are correct!"
@@ -194,17 +194,17 @@ function StyngrService:SetConfiguration(inputConfiguration: Types.StyngrServiceC
 		function(player: Player, event)
 			self:_clientTrackEvent(player.UserId, event)
 
-			if (event == "PLAYED" or event == "RESUMED") then
+			if event == "PLAYED" or event == "RESUMED" then
 				self._playersListening[player] = true
 			else
 				self._playersListening[player] = false
 			end
 
 			-- Hide or show boombox model if not disabled in configuration
-			if (self._configuration.boombox.disabled == nil) then
+			if self._configuration.boombox.disabled == nil then
 				-- Get or create boombox model
 				local boomboxModel = self._boomboxModels[player]
-				if (event == "PLAYED" or event == "RESUMED") then
+				if event == "PLAYED" or event == "RESUMED" then
 					boomboxModel:Show()
 				else
 					boomboxModel:Hide()
@@ -213,7 +213,7 @@ function StyngrService:SetConfiguration(inputConfiguration: Types.StyngrServiceC
 		end
 	)
 
-	if (self._configuration.boombox.disabled == nil) then
+	if self._configuration.boombox.disabled == nil then
 		-- Persistant boombox model
 		Players.PlayerAdded:Connect(function(player)
 			local model = BoomboxModel.new(self._configuration.boombox.textureId, player)
@@ -236,7 +236,7 @@ function StyngrService:SetConfiguration(inputConfiguration: Types.StyngrServiceC
 	end
 
 	ReplicatedStorage.Styngr.StartPlaylistSession.OnServerInvoke = function(player, playlistId)
-		assert(typeof(playlistId) == "string")
+		assert(typeof(playlistId) == "string", "Playlist ID is not a string")
 
 		local ok, session = self:StartPlaylistSession(player, playlistId):await()
 

@@ -15,7 +15,7 @@ dependencies = []
 [[package]]
 name = "oscar/styngrsdk"
 version = "0.1.0"
-dependencies = [["fusion", "elttob/fusion@0.2.0"], ["promise", "evaera/promise@4.0.0"]]
+dependencies = [["fusion", "elttob/fusion@0.2.0"], ["promise", "evaera/promise@4.0.0"], ["testez", "roblox/testez@0.4.1"]]
 
 [[package]]
 name = "roblox/testez"

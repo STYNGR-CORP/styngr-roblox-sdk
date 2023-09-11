@@ -1,9 +1,3 @@
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
-
-local Fusion = require(ReplicatedStorage.Styngr.Packages.fusion)
-local Computed = Fusion.Computed
-local Value = Fusion.Value
-
 local BoomboxModel = {}
 BoomboxModel.__index = BoomboxModel
 
@@ -17,7 +11,7 @@ function BoomboxModel.new(textureId: string, owner: Player)
 	self._visible = false
 
 	table.insert(self._connections, owner.CharacterAdded:Connect(function()
-		if (not self._visible) then return end
+		if not self._visible then return end
 		task.wait(0.5)
 
 		self:Show()
@@ -43,7 +37,7 @@ function BoomboxModel:Show()
 end
 
 function BoomboxModel:Hide(dontSetFlag: boolean)
-	if (dontSetFlag == nil) then
+	if dontSetFlag == nil then
 		self._visible = false
 	end
 
@@ -51,7 +45,7 @@ function BoomboxModel:Hide(dontSetFlag: boolean)
 end
 
 function BoomboxModel:Destroy()
-	if (self._asset) then
+	if self._asset then
 		self._asset:Destroy()
 	end
 

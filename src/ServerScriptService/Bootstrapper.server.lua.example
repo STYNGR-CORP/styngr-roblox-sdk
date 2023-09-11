@@ -1,0 +1,9 @@
+local StyngrService = require(script.Parent.Modules.StyngrService)
+StyngrService:SetConfiguration({
+	apiKey = "",
+	appId = "",
+	
+	boombox = {
+		textureId = "",
+	}
+})
